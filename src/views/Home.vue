@@ -28,18 +28,19 @@
   };
 
   const remove = async id => {
-    if (confirm('삭제하시겠습니까?')) {
-      const params = { id };
-      const data = await httpService.delete(params);
+    if (!confirm('삭제하시겠습니까?')) {
+      return;
+    }
 
-      if (data.resultData === 1) {
-        const deleteIdx = state.memos.findIndex(item => item.id === id);
-        if (deleteIdx) {
-          state.memos.splice(deleteIdx, 1);
-        }
-      } else {
-        alert(data.resultMessage);
+    const data = await httpService.deleteById(id);
+
+    if (data.resultData === 1) {
+      const deleteIdx = state.memos.findIndex(item => item.id === id);
+      if (deleteIdx) {
+        state.memos.splice(deleteIdx, 1);
       }
+    } else {
+      alert(data.resultMessage);
     }
   }
 </script>

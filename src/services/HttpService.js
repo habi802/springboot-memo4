@@ -23,8 +23,8 @@ class HttpService {
     return res.data;
   }
 
-  async delete(params) {
-    const res = await axios.delete('/memo', { params });
+  async deleteById(id) {
+    const res = await axios.delete(`/memo?id=${id}`);
     return res.data;
   }
 }
