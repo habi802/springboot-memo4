@@ -22,7 +22,7 @@
   });
 
   const moveToForm = () => {
-    const json = JSON.stringify(state.memo);
+    const json = JSON.stringify(state.memo); // Object to JSON (직렬화)
     router.push({
       path: '/memo/add',
       state: {

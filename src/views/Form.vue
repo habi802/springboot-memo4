@@ -27,10 +27,22 @@
       content: state.memo.content
     };
 
-    const data = await httpService.save(jsonBody);
+    let data = null;
+    let path = '/';
+    if (state.memo.id) {
+      // 수정
+      jsonBody.id = state.memo.id;
+      data = await httpService.modify(jsonBody);
+      path = `/memo/${state.memo.id}`;
+    } else {
+      // 등록
+      data = await httpService.save(jsonBody);
+    }
+    
     if (data.resultData === 1) {
       // 주소가 "/" 으로 라우팅 처리 하고 싶다.
-      router.push({ path: '/' });
+      // 수정하면 Detail.vue 로 가게 해주시요.
+      router.push({ path });
     } else {
       alert(data.resultMessage);
     }

@@ -26,6 +26,22 @@
     };
     findAll(params);
   };
+
+  const remove = async id => {
+    if (confirm('삭제하시겠습니까?')) {
+      const params = { id };
+      const data = await httpService.delete(params);
+
+      if (data.resultData === 1) {
+        const deleteIdx = state.memos.findIndex(item => item.id === id);
+        if (deleteIdx) {
+          state.memos.splice(deleteIdx, 1);
+        }
+      } else {
+        alert(data.resultMessage);
+      }
+    }
+  }
 </script>
 
 <template>
@@ -43,7 +59,7 @@
           <div class="d-flex justify-content-between">
             <b>{{ m.title }}</b>
             <div>
-              <span role="button" @click="remove(m.id)">삭제</span>
+              <span role="button" @click.prevent="remove(m.id)">삭제</span>
             </div>
           </div>
           <div class="mt-2">{{ m.content }}</div>
